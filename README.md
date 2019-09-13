@@ -14,4 +14,14 @@ Testando as possibilidades de aplicabilidade o Graphql em aplicações
 - Testar a conexão com o servidor (index.js):   
  https://us-central1-borboleta-d013b.cloudfunctions.net/helloWorld
 
+ Atualizando reagras do eslint
+ `npm install --save-dev eslint eslint-config-google`
+
  
+: Para utilizar variaveis de ambientes locais
+    $ npm install dotenv
+- No arquivo server (Mais alto nível)
+    require('dotenv').config()
+
+// Opção criar o schema atravez de GraphQLSchema ??????
+// Buildschema é limitado (resolvers not in the field) Usar apenas para testes de conexão

@@ -1,7 +1,9 @@
-const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const firebaseConfig = require('./config');
-// functions.config().firebase
-admin.initializeApp(firebaseConfig);
+const serviceAccount = require("./config.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://borboleta-d013b.firebaseio.com"
+});
 
 module.exports = {admin}

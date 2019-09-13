@@ -1,7 +1,6 @@
 const { GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLInt, GraphQLNonNull } = require('graphql');
 const { admin } = require('./util/admin');
 
-const usuario = { nome: "Karla", id: 2 }
 const helloType = new GraphQLObjectType({
     name:'hello',
     fields: () => ({
@@ -10,41 +9,52 @@ const helloType = new GraphQLObjectType({
             resolve: ({message}) => message
         },
         id :{ 
-            type: GraphQLInt, 
+            type: GraphQLString, 
             resolve: ({id}) => id,
         },
     })
 });
-
 const root = new GraphQLObjectType( 
     {
         name: 'root',
-        fields: { 
-            mensagem: {
+        fields: 
+        { 
+            mensagem: 
+            {
                 type: helloType ,
-                args:{
-                    id: {type: new GraphQLNonNull(GraphQLInt)},
-                    recado: {type: GraphQLString}
+                args:
+                {
+                    id:      {type: new GraphQLNonNull(GraphQLString)},
+                    message: {type: new GraphQLNonNull(GraphQLString)}
                 },
-                resolve: (parent, args)=> {
-                   return { 
-                       id : args.id,
-                       message: args.recado
-                    };
-                }
+                resolve: (parent, args)=> 
+                    {
+                        admin.firestore()
+                        .doc(`/usuarios/${args.id}`)
+                        .get()
+                        .then(doc => {
+                            if(doc.exists){
+                                const user = {
+                                    id:"1", 
+                                    message:"oi"
+                                }
+                                user.id = doc.data().id
+                                user.message = doc.data().apelido
+                                console.log(user)
+                                return user
+                            }else{
+                                return console.log("não achei")
+                            }
+                            
+                        })
+                        .catch(erro => {
+                            return console.error(erro)
+                        });
+                    }
             }
         }
-    })
-
+    }
+);
 module.exports = new GraphQLSchema({
     query: root,
 });
-/** admin.firestore()
-                    .doc(`/usuarios/${args.id}`)
-                    .get()
-                    .then((doc) => {
-                        usuario.id = doc.id
-                        return console.log(doc.data.name)
-                    }
-                        )
-                    .catch(erro => console.error(erro)) */
