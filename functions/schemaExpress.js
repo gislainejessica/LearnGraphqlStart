@@ -1,5 +1,5 @@
-const { GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLInt, GraphQLNonNull } = require('graphql');
-const { admin } = require('./util/admin');
+const {GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLInt, GraphQLNonNull} = require('graphql');
+const {admin} = require('./util/admin');
 
 const helloType = new GraphQLObjectType({
     name:'hello',
@@ -14,47 +14,41 @@ const helloType = new GraphQLObjectType({
         },
     })
 });
-const root = new GraphQLObjectType( 
-    {
+const root = new GraphQLObjectType({
         name: 'root',
-        fields: 
-        { 
-            mensagem: 
-            {
+        fields: { 
+            mensagem: {
                 type: helloType ,
-                args:
-                {
+                args:{
                     id:      {type: new GraphQLNonNull(GraphQLString)},
                     message: {type: new GraphQLNonNull(GraphQLString)}
                 },
-                resolve: (parent, args)=> 
-                    {
-                        admin.firestore()
-                        .doc(`/usuarios/${args.id}`)
-                        .get()
-                        .then(doc => {
-                            if(doc.exists){
-                                const user = {
-                                    id:"1", 
-                                    message:"oi"
-                                }
-                                user.id = doc.data().id
-                                user.message = doc.data().apelido
-                                console.log(user)
-                                return user
-                            }else{
-                                return console.log("não achei")
+                resolve: (parent, args)=> {
+                    admin.firestore()
+                    .doc(`/usuarios/${args.id}`)
+                    .get()
+                    .then(doc => {
+                        if(doc.exists){
+                            const user = {
+                                id:"1", 
+                                message:"oi"
                             }
-                            
-                        })
-                        .catch(erro => {
-                            return console.error(erro)
-                        });
-                    }
+                            user.id = doc.data().id
+                            user.message = doc.data().apelido
+                            console.log(user)
+                            return user
+                        }else{
+                            return console.log("não achei")
+                        }
+                        
+                    })
+                    .catch(erro => {
+                        return console.error(erro)
+                    });
+                }
             }
         }
-    }
-);
+});
 module.exports = new GraphQLSchema({
     query: root,
 });

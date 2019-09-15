@@ -5,5 +5,4 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://borboleta-d013b.firebaseio.com"
 });
-
-module.exports = {admin}
+module.exports = {admin};
