@@ -14,6 +14,6 @@ const serverApollo = new ApolloServer({
 // Aplicar ao servidor um middleware
 serverApollo.applyMiddleware({app});
 app.listen(PORT, () => {
-  console.log(`Servidor Apollo pronto pra decolar PORT: ${PORT} ${serverApollo.graphqlPath}`)
+  console.log(`Apollo pronto pra decolar PORT: ${PORT} ${serverApollo.graphqlPath}`)
 });
 exports.apollo = functions.https.onRequest(serverApollo);

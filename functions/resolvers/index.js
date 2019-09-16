@@ -1,13 +1,38 @@
+const {admin} = require('../util/admin');
+
 const resolvers = {
     Query: {
-      greeting: () => {
+      	greeting: () => {
           userq = {
             name :"Nana",
             age :  2,
             profession : "BeBê",
             text :"Nham",
           }
-          return userq      }
+          return userq
+        },
+        getUsuario: (_, args) => {
+          admin.firestore()
+          .doc(`/usuarios/${args.id}`)
+          .get()
+          .then(doc => {
+              if(doc.exists){
+                  userx = {
+                    id: doc.data().id,
+                    name: doc.data().nome,
+                    text:doc.data().apelido,
+                  }
+                  console.log(userx)
+                  return userx
+              }else{
+                  return console.log("Não achei :-( ")
+              }
+              
+          })
+          .catch(erro => {
+              return console.error(erro)
+          });
+        }
     },
     Mutation: {
       usuario : (_, args) => {
