@@ -5,7 +5,7 @@ const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = 4000;
 // Criar um servidor Apollo
 const serverApollo = new ApolloServer({
   typeDefs,
