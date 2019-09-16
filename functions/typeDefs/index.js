@@ -14,12 +14,20 @@ const Greeting = gql`
 `
 
 const Query = gql`
+input TypeInput {
+    name: String
+    age: Int
+    profession: String
+    text: String
+  }
+ 
+  type Mutation{
+    usuario(user: String): Greeting
+    usuarios(input:TypeInput):Greeting
+  } 
   type Query {
     greeting(name: String): Greeting
     
-  }
-  type Mutation{
-    usuario(user: String): Greeting
   }
   
 `
