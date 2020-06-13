@@ -1,4 +1,9 @@
-# LearnGraphqlStart
+<img align="center" alt="Firebase" src="https://miro.medium.com/max/1400/1*75Jv8CUiyzrSqDVu2O9Yow.png" />
+
+<h3 align="center">
+  Firebase, GraphQL e Cloud Funtions
+</h3>
+
 Testando as possibilidades de aplicabilidade o Graphql em aplicações
 ``` 
     firebase init
@@ -23,5 +28,3 @@ Testando as possibilidades de aplicabilidade o Graphql em aplicações
 - No arquivo server (Mais alto nível)
     require('dotenv').config()
 
-// Opção criar o schema atravez de GraphQLSchema ??????
-// Buildschema é limitado (resolvers not in the field) Usar apenas para testes de conexão
